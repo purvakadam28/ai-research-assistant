@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 type Message = {
   role: "user" | "agent";
@@ -238,12 +240,9 @@ export default function Home() {
                 )}
 
               <div className="message-bubble">
-                {message.text.split("\n").map((line, i) => (
-                  <span key={i}>
-                    {line}
-                    {i < message.text.split("\n").length - 1 && <br />}
-                  </span>
-                ))}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {message.text}
+                </ReactMarkdown>
               </div>
             </div>
           ))}

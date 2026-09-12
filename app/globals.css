@@ -466,3 +466,128 @@ button {
     font-size: 23px;
   }
 }
+/* AI response Markdown styling */
+
+.message-bubble {
+  line-height: 1.7;
+}
+
+.message-bubble h1,
+.message-bubble h2,
+.message-bubble h3 {
+  margin-top: 18px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.message-bubble h1 {
+  font-size: 1.35rem;
+}
+
+.message-bubble h2 {
+  font-size: 1.15rem;
+}
+
+.message-bubble h3 {
+  font-size: 1rem;
+}
+
+.message-bubble p {
+  margin: 0 0 12px;
+}
+
+.message-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.message-bubble ul,
+.message-bubble ol {
+  margin: 8px 0 14px;
+  padding-left: 24px;
+}
+
+.message-bubble li {
+  margin: 5px 0;
+}
+
+.message-bubble strong {
+  font-weight: 700;
+}
+
+.message-bubble em {
+  font-style: italic;
+}
+
+.message-bubble hr {
+  margin: 18px 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Markdown tables */
+
+.message-bubble table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.92rem;
+  overflow: hidden;
+}
+
+.message-bubble th,
+.message-bubble td {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 9px 11px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.message-bubble th {
+  font-weight: 700;
+}
+
+/* Code */
+
+.message-bubble code {
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.message-bubble pre {
+  margin: 14px 0;
+  padding: 14px;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-family: monospace;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.message-bubble pre code {
+  padding: 0;
+  background: transparent;
+}
+
+/* Links */
+
+.message-bubble a {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+/* Mobile table scrolling */
+
+@media (max-width: 700px) {
+  .message-bubble {
+    font-size: 0.94rem;
+  }
+
+  .message-bubble table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
