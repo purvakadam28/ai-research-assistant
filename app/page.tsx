@@ -30,9 +30,38 @@ const tools = [
 
 export default function Home() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      role: "user",
+      text: "Compare Python and Java for beginners.",
+    },
+    {
+      role: "agent",
+      text: `## Python vs Java for Beginners
+
+**Python** is generally easier for beginners because it has simple, readable syntax and requires less boilerplate code.
+
+**Java** has a steeper learning curve because it introduces concepts such as classes, objects, types, and more structured syntax earlier.
+
+### Quick comparison
+
+| Criteria | Python | Java |
+|---|---|---|
+| Learning curve | Easy | Moderate |
+| Syntax | Simple | More structured |
+| Beginner friendly | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Versatility | High | High |
+| Job opportunities | High | High |
+
+**Recommendation:** Python is usually the better choice for a beginner, especially for data analytics, AI, automation, and scripting.`,
+      tools: [],
+    },
+  ]);
+
   const [loading, setLoading] = useState(false);
   const [activeTools, setActiveTools] = useState<string[]>([]);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
 
   async function sendMessage() {
     const question = input.trim();
@@ -119,9 +148,52 @@ export default function Home() {
 
   function clearChat() {
   sessionStorage.removeItem("researchSessionId");
-  setMessages([]);
+
+  setMessages([
+    {
+      role: "user",
+      text: "Compare Python and Java for beginners.",
+    },
+    {
+      role: "agent",
+      text: `## Python vs Java for Beginners
+
+**Python** is generally easier for beginners because it has simple, readable syntax and requires less boilerplate code.
+
+**Java** has a steeper learning curve because it introduces concepts such as classes, objects, types, and more structured syntax earlier.
+
+### Quick comparison
+
+| Criteria | Python | Java |
+|---|---|---|
+| Learning curve | Easy | Moderate |
+| Syntax | Simple | More structured |
+| Beginner friendly | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |
+| Versatility | High | High |
+| Job opportunities | High | High |
+
+**Recommendation:** Python is usually the better choice for a beginner, especially for data analytics, AI, automation, and scripting.`,
+      tools: [],
+    },
+  ]);
+
   setActiveTools([]);
+  setCopiedIndex(null);
 }
+
+  async function copyMessage(text: string, index: number) {
+    try {
+      await navigator.clipboard.writeText(text);
+
+      setCopiedIndex(index);
+
+      setTimeout(() => {
+        setCopiedIndex(null);
+      }, 2000);
+    } catch (error) {
+      console.error("Failed to copy:", error);
+    }
+  }
 
   return (
     <main className="app-shell">
@@ -134,13 +206,20 @@ export default function Home() {
           </div>
 
           <div>
-            <div className="brand-name">AI Research Assistant</div>
-            <div className="brand-sub">Workflow console</div>
+            <div className="brand-name">
+              AI Research Assistant
+            </div>
+
+            <div className="brand-sub">
+              Workflow console
+            </div>
           </div>
         </div>
 
         <div className="sidebar-scroll">
-          <div className="section-label">Capabilities</div>
+          <div className="section-label">
+            Capabilities
+          </div>
 
           <ul className="tool-list">
             {tools.map((tool) => (
@@ -162,8 +241,13 @@ export default function Home() {
                 </div>
 
                 <div>
-                  <div className="tool-name">{tool.name}</div>
-                  <div className="tool-desc">{tool.desc}</div>
+                  <div className="tool-name">
+                    {tool.name}
+                  </div>
+
+                  <div className="tool-desc">
+                    {tool.desc}
+                  </div>
                 </div>
               </li>
             ))}
@@ -240,10 +324,25 @@ export default function Home() {
                 )}
 
               <div className="message-bubble">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                >
                   {message.text}
                 </ReactMarkdown>
               </div>
+
+              {message.role === "agent" && (
+                <button
+                  className="copy-button"
+                  onClick={() =>
+                    copyMessage(message.text, index)
+                  }
+                >
+                  {copiedIndex === index
+                    ? "✓ Copied"
+                    : "Copy"}
+                </button>
+              )}
             </div>
           ))}
 
